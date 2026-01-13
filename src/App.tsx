@@ -88,7 +88,11 @@ function App() {
           )}
 
           {activeTab === 'overview' && (
-            <Dashboard data={Object.values(data.contacts)} onDeleteContact={(id) => handleDelete('contacts', id)} />
+            <Dashboard 
+              contacts={contactsList} 
+              opportunities={oppsList} 
+              onDeleteContact={(id) => handleDelete('contacts', id)} 
+            />
           )}
 
           {activeTab === 'contacts' && (
@@ -98,8 +102,8 @@ function App() {
               columns={[
                 { label: 'Name', key: 'name' },
                 { label: 'Email', key: 'emails' },
-                { label: 'Stage', key: 'stage' },
-                { label: 'Value', key: 'value' }
+                { label: 'Phone', key: 'phones' },
+                { label: 'Lead', key: 'lead' }
               ]}
               onDelete={(id) => handleDelete('contacts', id)}
             />
@@ -111,9 +115,9 @@ function App() {
               data={oppsList}
               columns={[
                 { label: 'Name', key: 'name' },
+                { label: 'Value', key: 'value' },
                 { label: 'Status', key: 'status' },
-                { label: 'Stage', key: 'stage' },
-                { label: 'Value', key: 'value' }
+                { label: 'Close Date', key: 'closeDate' }
               ]}
               onDelete={(id) => handleDelete('opportunities', id)}
             />

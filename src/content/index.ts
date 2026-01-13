@@ -173,6 +173,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         currentData.lastSync = Date.now();
 
+        console.log("[Extractor] Saving data:", currentData);
+
         chrome.storage.local.set({ 'close_data': currentData }, () => {
           console.log(`[Extractor] Saved. Count: ${totalCount}`);
           sendResponse({ 

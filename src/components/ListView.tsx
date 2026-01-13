@@ -31,18 +31,28 @@ export const ListView = ({
             No data available
           </div>
         ) : (
-          data.map((row: any) => (
-            <TableRow
-              key={row.id}
-              avatar={row.name?.charAt(0) || '?'}
-              title={row.name || 'Unknown'}
-              subtitle={row.email || row.company || ''}
-              col2={row[columns[1]?.key || 'company'] || '-'}
-              col3={row[columns[2]?.key || 'stage'] || 'No Stage'}
-              col4={row[columns[3]?.key || 'value'] || '-'}
-              onDelete={() => onDelete(row.id)}
-            />
-          ))
+          data.map((row: any) => {
+            const getColumnValue = (key: string) => {
+              const value = row[key];
+              if (Array.isArray(value)) {
+                return value.length > 0 ? value[0] : '-';
+              }
+              return value || '-';
+            };
+
+            return (
+              <TableRow
+                key={row.id}
+                avatar={row.name?.charAt(0) || '?'}
+                title={row.lead || row.name || 'Unknown'}
+                subtitle={row.name || ''}
+                col2={getColumnValue(columns[1]?.key) || '-'}
+                col3={getColumnValue(columns[2]?.key) || '-'}
+                col4={getColumnValue(columns[3]?.key) || '-'}
+                onDelete={() => onDelete(row.id)}
+              />
+            );
+          })
         )}
       </div>
     </div>
