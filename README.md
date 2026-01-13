@@ -297,9 +297,6 @@ npm run lint
 - Shadow DOM prevents script injection
 - Content Security Policy enforced
 
-## License
-
-MIT
 
 ## Support
 
