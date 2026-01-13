@@ -2,11 +2,11 @@ import type { StorageShape, Contact, Opportunity, Task } from '../types/schema';
 
 const STORAGE_KEY = 'close_data';
 
-
 export const getStorageData = async (): Promise<StorageShape> => {
   const result = await chrome.storage.local.get(STORAGE_KEY);
+  const data = result[STORAGE_KEY] as StorageShape | undefined;
   
-  return (result[STORAGE_KEY] as StorageShape) || { 
+  return data || { 
     contacts: {}, 
     opportunities: {}, 
     tasks: {}, 
@@ -29,7 +29,6 @@ export const saveExtractedData = async (
   newOpps.forEach(o => oppMap[o.id] = o);
   newTasks.forEach(t => taskMap[t.id] = t);
 
-  
   const updatedData: StorageShape = {
     contacts: contactMap,
     opportunities: oppMap,
@@ -40,7 +39,6 @@ export const saveExtractedData = async (
   await chrome.storage.local.set({ [STORAGE_KEY]: updatedData });
   console.log("Data Saved Successfully", updatedData);
 };
-
 
 export const clearData = async () => {
   await chrome.storage.local.remove(STORAGE_KEY);

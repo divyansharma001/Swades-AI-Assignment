@@ -1,9 +1,9 @@
 export interface Contact {
   id: string;     
-  name: string;
-  email: string;
-  phone: string;
-  company: string; 
+  name: string;      
+  lead: string;      
+  emails: string[];
+  phones: string[];
 }
 
 export interface Opportunity {
@@ -18,6 +18,7 @@ export interface Task {
   id: string;
   description: string;
   dueDate: string;
+  assignee: string;
   isComplete: boolean;
 }
 
