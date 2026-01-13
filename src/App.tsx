@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { saveExtractedData, getStorageData, clearData } from './utils/storage';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [status, setStatus] = useState('Idle');
+
+  const handleTestSave = async () => {
+    setStatus('Saving...');
+    // Simulate scraping 2 contacts
+    await saveExtractedData([
+      { id: '1', name: 'Alice', email: 'alice@test.com', phone: '123', company: 'A-Corp' },
+      { id: '2', name: 'Bob', email: 'bob@test.com', phone: '456', company: 'B-Corp' }
+    ], [], []);
+    setStatus('Saved! Check Console.');
+  };
+
+  const handleTestRead = async () => {
+    const data = await getStorageData();
+    console.log("Read from Storage:", data);
+    setStatus(`Read ${Object.keys(data.contacts).length} contacts.`);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="p-4 w-64">
+      <h1 className="text-xl font-bold mb-4">Storage Test</h1>
+      <div className="flex flex-col gap-2">
+        <button onClick={handleTestSave} className="bg-blue-500 text-white p-2 rounded">1. Test Save</button>
+        <button onClick={handleTestRead} className="bg-green-500 text-white p-2 rounded">2. Test Read</button>
+        <button onClick={() => { clearData(); setStatus("Cleared"); }} className="bg-red-500 text-white p-2 rounded">3. Clear Data</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <p className="mt-4 text-gray-600">{status}</p>
+    </div>
+  );
 }
 
-export default App
+export default App;
